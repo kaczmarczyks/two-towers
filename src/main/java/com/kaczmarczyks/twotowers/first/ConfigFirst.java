@@ -5,7 +5,6 @@ import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy;
 import org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +25,7 @@ import java.util.Map;
         entityManagerFactoryRef = "firstEntityManagerFactory",
         transactionManagerRef = "firstTransactionManager")
 @Configuration
-public class Config {
-
+public class ConfigFirst {
 
     @Autowired
     private Environment env;
@@ -43,14 +41,18 @@ public class Config {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean firstEntityManagerFactory(
-            @Qualifier("firstDataSource") DataSource dataSource,
-            EntityManagerFactoryBuilder builder) {
+            @Qualifier("firstDataSource") DataSource dataSource) {
 
-        return builder.dataSource(dataSource)
-                .packages("com.kaczmarczyks.twotowers.first")
-                .properties(getJpaProperties(env))
-                .persistenceUnit("first")
-                .build();
+        LocalContainerEntityManagerFactoryBean em
+                = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource);
+        em.setPackagesToScan("com.kaczmarczyks.twotowers.first");
+
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+        em.setJpaPropertyMap(getJpaProperties(env));
+        em.setPersistenceUnitName("first");
+        return em;
     }
 
     @Bean
@@ -70,10 +72,12 @@ public class Config {
         return transactionManager;
     }
 
+
     @Bean
-    public SpringLiquibase liquibase(@Qualifier("firstDataSource") DataSource dataSource) {
+    public SpringLiquibase firstLiquibase(
+            @Qualifier("firstDataSource") DataSource dataSource) {
         SpringLiquibase liquibase = new SpringLiquibase();
-        liquibase.setChangeLog(env.getProperty("spring.liquibase.change-log"));
+        liquibase.setChangeLog(env.getProperty("change-log"));
         liquibase.setDataSource(dataSource);
         return liquibase;
     }
