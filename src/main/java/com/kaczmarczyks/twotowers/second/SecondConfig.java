@@ -1,7 +1,6 @@
 package com.kaczmarczyks.twotowers.second;
 
 import com.google.common.collect.ImmutableMap;
-import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -25,7 +24,7 @@ import java.util.Map;
         entityManagerFactoryRef = "secondEntityManagerFactory",
         transactionManagerRef = "secondTransactionManager")
 @Configuration
-public class ConfigSecond {
+public class SecondConfig {
 
 
     @Autowired
@@ -71,14 +70,5 @@ public class ConfigSecond {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(factory);
         return transactionManager;
-    }
-
-    @Bean
-    public SpringLiquibase secondLiquibase(
-            @Qualifier("secondDataSource") DataSource dataSource) {
-        SpringLiquibase liquibase = new SpringLiquibase();
-        liquibase.setChangeLog(env.getProperty("change-log"));
-        liquibase.setDataSource(dataSource);
-        return liquibase;
     }
 }

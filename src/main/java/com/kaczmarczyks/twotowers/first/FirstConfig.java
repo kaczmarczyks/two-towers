@@ -1,7 +1,6 @@
 package com.kaczmarczyks.twotowers.first;
 
 import com.google.common.collect.ImmutableMap;
-import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -25,7 +24,7 @@ import java.util.Map;
         entityManagerFactoryRef = "firstEntityManagerFactory",
         transactionManagerRef = "firstTransactionManager")
 @Configuration
-public class ConfigFirst {
+public class FirstConfig {
 
     @Autowired
     private Environment env;
@@ -72,13 +71,4 @@ public class ConfigFirst {
         return transactionManager;
     }
 
-
-    @Bean
-    public SpringLiquibase firstLiquibase(
-            @Qualifier("firstDataSource") DataSource dataSource) {
-        SpringLiquibase liquibase = new SpringLiquibase();
-        liquibase.setChangeLog(env.getProperty("change-log"));
-        liquibase.setDataSource(dataSource);
-        return liquibase;
-    }
 }

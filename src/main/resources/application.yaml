@@ -16,4 +16,4 @@ spring:
   first-liquibase:
     change-log: classpath:/db/changelog/first/db.changelog-master.yaml
   second-liquibase:
-      change-log: classpath:/db/changelog/second/db.changelog-master.yaml
+    change-log: classpath:/db/changelog/second/db.changelog-master.yaml
