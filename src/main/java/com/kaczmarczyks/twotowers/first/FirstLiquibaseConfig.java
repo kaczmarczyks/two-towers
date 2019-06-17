@@ -17,7 +17,6 @@ import javax.sql.DataSource;
 @Configuration
 public class FirstLiquibaseConfig {
 
-
     @Autowired
     private Environment env;
 

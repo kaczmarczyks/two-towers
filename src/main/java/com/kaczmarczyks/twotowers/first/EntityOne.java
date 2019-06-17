@@ -16,5 +16,4 @@ public class EntityOne {
     Long id;
 
     String propertyOne;
-
 }

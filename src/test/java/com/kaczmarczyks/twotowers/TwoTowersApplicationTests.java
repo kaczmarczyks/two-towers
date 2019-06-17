@@ -27,7 +27,6 @@ public class TwoTowersApplicationTests {
     public void contextLoads() {
     }
 
-
     @Test
     @Transactional("firstTransactionManager")
     public void entityOneIsSaved() {
@@ -55,5 +54,4 @@ public class TwoTowersApplicationTests {
         //then
         assertThat(entityTwo.getId()).isNotNull();
     }
-
 }
