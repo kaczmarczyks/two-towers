@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,6 +29,7 @@ public class TwoTowersApplicationTests {
 
 
     @Test
+    @Transactional("firstTransactionManager")
     public void entityOneIsSaved() {
 
         //given
@@ -41,6 +43,7 @@ public class TwoTowersApplicationTests {
     }
 
     @Test
+    @Transactional("secondTransactionManager")
     public void entityTwoIsSaved() {
 
         //given
@@ -52,4 +55,5 @@ public class TwoTowersApplicationTests {
         //then
         assertThat(entityTwo.getId()).isNotNull();
     }
+
 }
