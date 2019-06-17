@@ -1,0 +1,21 @@
+databaseChangeLog:
+- changeSet:
+    id: 00001-01
+    author: kaczmarczyks
+    changes:
+    - createTable:
+          columns:
+          - column:
+              name: id
+              type: long
+          - column:
+              name: property_one
+              type: varchar(255)
+          tableName: entity_one
+- changeSet:
+    id: 00001-02
+    author: kaczmarczyks
+    changes:
+    - createSequence:
+          incrementBy: 50
+          sequenceName: entity_one_sequence
